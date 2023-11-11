@@ -1,0 +1,34 @@
+unit Controller.Cliente;
+
+interface
+
+uses Horse, System.JSON, system.SysUtils;
+
+procedure Registry;
+procedure listarCliente;
+
+implementation
+
+procedure listarCliente(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+begin
+   Res.Send('listar clientes');
+end;
+
+procedure Registry;
+begin
+  THorse.Get('/cliente', listarCliente);
+
+  THorse.Post('/cliente',
+    procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+    begin
+      Res.Send('cadastrar cliente');
+    end);
+
+  THorse.delete('/cliente',
+    procedure(Req: THorseRequest; Res: THorseResponse; Next: TProc)
+    begin
+      Res.Send('Excluir um cliente');
+    end);
+end;
+
+end.
